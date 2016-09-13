@@ -92,7 +92,7 @@ app.get("/articles", function(request, response){
 app.get("/articles/:id", function(request, response){
 	//Find the specific article in the DB
 	Article.findOne({"_id": request.params.id})
-	//Populate that article's comments
+	//Populate thehat article's comments
 	.populate("comment")
 	//Run the query
 	.exec(function(error, doc){
@@ -102,5 +102,11 @@ app.get("/articles/:id", function(request, response){
 			response.json(doc);
 		}
 	});
+});
+
+var port = process.env.PORT || 3000;
+
+app.listen(port, function() {
+    console.log("News Scraper is listening on ", port);
 });
 
