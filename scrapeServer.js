@@ -69,11 +69,38 @@ app.get("/scrape", function(req, res){
 		  		if (error){
 		  			console.log("error: ", error);
 		  		}else{
-		  			console.log(doc)
+		  			console.log(doc);
 		  		}
 		  	});
 		});
 		response.send("Site scraped!")
 	});
 })
+
+//Retrieve all articles from the DB
+app.get("/articles", function(request, response){
+	Article.find({}, function(error, doc){
+		if(error){
+			console.log(error);
+		}else{
+			response.json(doc);
+		}
+	});
+});
+
+//Retrieve a specific article by id
+app.get("/articles/:id", function(request, response){
+	//Find the specific article in the DB
+	Article.findOne({"_id": request.params.id})
+	//Populate that article's comments
+	.populate("comment")
+	//Run the query
+	.exec(function(error, doc){
+		if(error){
+			console.log(error);
+		}else{
+			response.json(doc);
+		}
+	});
+});
 

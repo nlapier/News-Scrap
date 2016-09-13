@@ -2,7 +2,7 @@
 
 
 //Save notes
-$(document).on("click", "#saveNotes", function(){
+$(document).on("click", "#noteButton", function(){
 	var articleID = $(this).attr("data-id");
 	var noteTitle = $("#newTitleInput").val();
 	var noteBody = $("#newBodyInput").val();
@@ -15,6 +15,9 @@ $(document).on("click", "#saveNotes", function(){
 			body: noteBody
 		}
 	}).done(function(data){
-		
-	})
-})
+		console.log(data);
+		$("#noteDiv").empty();
+	});
+	$("#newTitleInput").val("");
+	$("#newBodyInput").val("");
+});
