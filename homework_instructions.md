@@ -1,3 +1,6 @@
+mongodb uri: mongodb://heroku_6v7q6tn6:cgdq1ums7o70l0e8dv1qorhdkl@ds029446.mlab.com:29446/heroku_6v7q6tn6
+
+
 # Week 18 Homework Assignment - All The News That Fit to Scrape
 
 ### Overview
