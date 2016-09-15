@@ -6,7 +6,7 @@ function addArticle(insertDiv, article){
 		"data-id": article._id
 	})
 	var title = $("<h5>").text(article.title);
-	var link = $("<p>").text(articld.link);
+	var link = $("<p>").text(article.link);
 
 	articleBox.append(title);
 	articleBox.append(link);
@@ -22,14 +22,23 @@ $(document).ready(function(){
 	})
 
 	//Once that's done, load the scraped articles to the screen
-	.done(function(){
-		$.getJSON('/articles', function(data) {
-			console.log(data);
-			data.forEach(function(currentArticle){
-				addArticle("#articlesDiv", currentArticle);
-			});
+	// .done(function(){
+	// 	$.getJSON('/articles', function(data) {
+	// 		console.log(data);
+	// 		data.forEach(function(currentArticle){
+	// 			addArticle("#articlesDiv", currentArticle);
+	// 		});
+	// 	});
+	// })
+})
+
+$("#scrapeButton").on("click", function(){
+	$.getJSON('/articles', function(data) {
+		console.log(data);
+		data.forEach(function(currentArticle){
+			addArticle("#articlesDiv", currentArticle);
 		});
-	})
+	});
 })
 
 
