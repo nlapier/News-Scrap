@@ -44,10 +44,11 @@ app.get('/', function(request, response) {
 
 //Scrape route
 app.get("/scrape", function(req, res){
+	console.log("***scrape***");
 	var url = "http://www.streetsblog.org/";
 	request(url, function (error, response, html) {
 		if(error){
-		throw error;
+			throw error;
 		}
 
 		//Load the scraped site's html into cheerio
@@ -73,7 +74,8 @@ app.get("/scrape", function(req, res){
 		  		}
 		  	});
 		});
-		response.send("Site scraped!")
+		
+		// response.send("Site scraped!")
 	});
 })
 
@@ -103,6 +105,29 @@ app.get("/articles/:id", function(request, response){
 		}
 	});
 });
+
+//Add and replace notes
+app.post("/articles/:id", function(request, response){
+	//Make a new Note from the user's input
+	var newNote = new Note(request.body);
+
+	newNote.save(function(error, doc){
+		if (error){
+			console.log(error);
+		} else{
+			//Add new note/replace old note with new note
+			Article.findOneAndUpdate({"_id": request.params.id}, {"note": doc._id})
+			.exec(function(error, doc){
+				if(error){
+					console.log(error);
+				} else{
+					response.send(doc);
+				}
+			})
+		}
+	});
+});
+
 
 var port = process.env.PORT || 3000;
 
