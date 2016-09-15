@@ -1,24 +1,48 @@
 
 function addArticle(insertDiv, article){
-	var articleDiv = $(insertDiv);
+	console.log("addArticle()");
+	// var articleDiv = $(insertDiv);
 	var articleBox = $("<div>").attr({
 		"data-id": article._id
 	})
 	var title = $("<h5>").text(article.title);
-	var link = $("<p>").text(articld.link);
+	var link = $("<p>").text(article.link);
 
 	articleBox.append(title);
 	articleBox.append(link);
 
-	insertDiv.prepend(articleBox);
+	$(insertDiv).prepend(articleBox);
 }
 
+$(document).ready(function(){
 
-$.getJSON('/articles', function(data) {
-	data.forEach(function(currentArticle){
-		addArticle("#articleDiv", currentArticle);
+	//Scrape the targeted site into the DB
+	$.get("/scrape", function(data){
+		console.log("get /scrape data: ", data);
+	})
+
+	//Once that's done, load the scraped articles to the screen
+	// .done(function(){
+	// 	$.getJSON('/articles', function(data) {
+	// 		console.log(data);
+	// 		data.forEach(function(currentArticle){
+	// 			addArticle("#articlesDiv", currentArticle);
+	// 		});
+	// 	});
+	// })
+})
+
+$("#scrapeButton").on("click", function(){
+	$.getJSON('/articles', function(data) {
+		console.log(data);
+		data.forEach(function(currentArticle){
+			addArticle("#articlesDiv", currentArticle);
+		});
 	});
-});
+})
+
+
+
 
 
 
