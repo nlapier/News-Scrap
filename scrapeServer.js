@@ -64,17 +64,23 @@ app.get("/scrape", function(req, res){
 			    link: link
 			};
 
-		  	var scrapedArticle = new Article(result);
-
-		  	scrapedArticle.save(function(error, doc){
-		  		if (error){
-		  			console.log("error: ", error);
-		  		}else{
-		  			console.log(doc);
-		  		}
-		  	});
+				Article.find({link: result.link}, function(error, articleArr){
+				//If the current article is already in the database
+				if(articleArr.length){
+					console.log("Article skipped: ", articleArr)
+				}//Otherwise, store it to the DB
+				else{
+				  	var scrapedArticle = new Article(result);
+				  	scrapedArticle.save(function(error, doc){
+				  		if (error){
+				  			console.log("error: ", error);
+				  		}else{
+				  			console.log(doc);
+				  		}
+				  	});
+				}
+			})
 		});
-		
 		// response.send("Site scraped!")
 	});
 })
