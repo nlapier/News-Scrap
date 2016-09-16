@@ -75,7 +75,7 @@ app.get("/scrape", function(req, res){
 				  		if (error){
 				  			console.log("error: ", error);
 				  		}else{
-				  			console.log(doc);
+				  			console.log("new article scraped:", doc);
 				  		}
 				  	});
 				}
